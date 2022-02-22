@@ -1,0 +1,42 @@
+{
+  "name": "mofest-back",
+  "version": "1.0.0",
+  "main": "app.ts",
+  "repository": "https://github.com/izharul-haq/mofest-back.git",
+  "author": "Izharulhaq <izharhaq00@gmail.com>",
+  "license": "MIT",
+  "dependencies": {
+    "@prisma/client": "^3.9.2",
+    "ajv": "^8.6.2",
+    "body-parser": "^1.19.0",
+    "dotenv": "^10.0.0",
+    "fastify": "^3.20.2",
+    "fastify-autoroutes": "^1.5.0",
+    "fastify-cors": "^6.0.2",
+    "fastify-multipart": "^5.0.0",
+    "fastify-swagger": "^4.9.1",
+    "reflect-metadata": "^0.1.13",
+    "tsconfig-paths": "^3.11.0",
+    "tsyringe": "^4.6.0"
+  },
+  "devDependencies": {
+    "@commitlint/cli": "^13.1.0",
+    "@commitlint/config-conventional": "^13.1.0",
+    "@swc/core": "^1.2.84",
+    "@types/dotenv": "^8.2.0",
+    "@types/node": "^16.7.10",
+    "@typescript-eslint/eslint-plugin": "^4.30.0",
+    "@typescript-eslint/parser": "^4.30.0",
+    "cross-env": "^7.0.3",
+    "eslint": "^7.32.0",
+    "eslint-config-prettier": "^8.3.0",
+    "eslint-plugin-prettier": "^4.0.0",
+    "eslint-plugin-unused-imports": "^1.1.4",
+    "nodemon": "^2.0.12",
+    "prettier": "^2.3.2",
+    "prisma": "^3.9.2",
+    "ts-node": "^10.2.1",
+    "ts-node-dev": "^1.1.8",
+    "typescript": "^4.4.2"
+  }
+}
