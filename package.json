@@ -5,6 +5,12 @@
   "repository": "https://github.com/izharul-haq/mofest-back.git",
   "author": "Izharulhaq <izharhaq00@gmail.com>",
   "license": "MIT",
+  "scripts": {
+    "prepare": "husky install",
+    "preinstall": "npx only-allow yarn",
+    "lint": "eslint . --ext .ts --max-warnings 0",
+    "lint-fix": "eslint . --ext .ts --fix"
+  },
   "dependencies": {
     "@prisma/client": "^3.9.2",
     "ajv": "^8.6.2",
@@ -32,6 +38,7 @@
     "eslint-config-prettier": "^8.3.0",
     "eslint-plugin-prettier": "^4.0.0",
     "eslint-plugin-unused-imports": "^1.1.4",
+    "husky": "^7.0.4",
     "nodemon": "^2.0.12",
     "prettier": "^2.3.2",
     "prisma": "^3.9.2",
