@@ -1,5 +1,6 @@
 import { FastifyInstance } from 'fastify';
 import fastifySwagger from 'fastify-swagger';
+import MovieSchema from './schema/movie';
 
 const applySwagger = (server: FastifyInstance): void => {
   server.register(fastifySwagger, {
@@ -15,6 +16,8 @@ const applySwagger = (server: FastifyInstance): void => {
     },
     exposeRoute: true,
   });
+
+  server.addSchema(MovieSchema);
 };
 
 export default applySwagger;

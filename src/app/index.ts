@@ -14,10 +14,10 @@ const intializeApp = async (): Promise<FastifyInstance> => {
     },
   });
 
-  applyAutoroutes(server);
   applyCors(server);
-  applyMultipart(server);
   applySwagger(server);
+  applyAutoroutes(server);
+  applyMultipart(server);
 
   return server;
 };

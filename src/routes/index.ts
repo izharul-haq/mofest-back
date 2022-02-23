@@ -7,6 +7,11 @@ export default (): Resource =>
         description: 'Health check to make sure backend is responsive',
         summary: 'Health check',
         tags: ['Health'],
+        response: {
+          '200': {
+            type: 'string',
+          },
+        },
       },
       handler: async () => 'OK',
     },

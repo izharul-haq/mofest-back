@@ -1,3 +1,4 @@
+import 'reflect-metadata';
 import intializeApp from './app/index';
 import env from './env';
 
