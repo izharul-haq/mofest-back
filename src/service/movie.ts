@@ -23,12 +23,12 @@ class MovieService {
     return movie;
   }
 
-  public async getByTitle(title: string): Promise<Movie[]> {
-    const movies = await this.db.client.movie.findMany({
+  public async getByTitle(title: string): Promise<Movie | null> {
+    const movie = await this.db.client.movie.findUnique({
       where: { title: title },
     });
 
-    return movies;
+    return movie;
   }
 
   public async getByDescription(desc: string): Promise<Movie[]> {

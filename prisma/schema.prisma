@@ -12,7 +12,7 @@ datasource db {
 
 model Movie {
   id       Int      @id @default(autoincrement())
-  title    String
+  title    String   @unique
   desc     String
   duration Int
   artists  String[]

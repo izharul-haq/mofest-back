@@ -1,6 +1,7 @@
 import { FastifyReply, FastifyRequest } from 'fastify';
 import { Resource } from 'fastify-autoroutes';
 import { container } from 'tsyringe';
+import APIError from '~/common/error/error';
 import MovieHandler from '~/handler/movie';
 
 const handler = container.resolve(MovieHandler);
@@ -9,7 +10,7 @@ export default (): Resource =>
   <Resource>{
     get: {
       schema: {
-        description: 'Get list of movies from database based on title',
+        description: 'Get a movie from database based on title',
         summary: 'Get movies by title',
         tags: ['Movie'],
 
@@ -24,10 +25,7 @@ export default (): Resource =>
 
         response: {
           '200': {
-            type: 'array',
-            items: {
-              $ref: 'http://example.com/schema/movie#',
-            },
+            $ref: 'http://example.com/schema/movie#',
           },
         },
       },
@@ -35,10 +33,15 @@ export default (): Resource =>
         request: FastifyRequest<{ Querystring: { q: string } }>,
         reply: FastifyReply
       ) => {
-        const title = request.query.q as string;
-        const movies = await handler.getByTitle(title);
+        try {
+          const title = request.query.q as string;
+          const movie = await handler.getByTitle(title);
 
-        return reply.send(movies);
+          return reply.send(movie);
+        } catch (error) {
+          const e = error as APIError;
+          return reply.status(e.statusCode).send(e.message);
+        }
       },
     },
   };

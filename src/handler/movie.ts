@@ -23,10 +23,14 @@ class MovieHandler {
     }
   };
 
-  public getByTitle = async (title: string): Promise<Movie[]> => {
-    const movies = await this.movieService.getByTitle(title);
+  public getByTitle = async (title: string): Promise<Movie> => {
+    const movie = await this.movieService.getByTitle(title);
 
-    return movies;
+    if (movie) {
+      return movie;
+    } else {
+      throw new APIError(404, 'Movie not found');
+    }
   };
 
   public getByDescription = async (desc: string): Promise<Movie[]> => {
