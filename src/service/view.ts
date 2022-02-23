@@ -66,6 +66,19 @@ class ViewService {
 
     return view;
   }
+
+  public async delete(userId: string, movieId: number): Promise<View> {
+    const view = await this.db.client.view.delete({
+      where: {
+        userId_movieId: {
+          userId: userId,
+          movieId: movieId,
+        },
+      },
+    });
+
+    return view;
+  }
 }
 
 export default ViewService;

@@ -35,6 +35,12 @@ class ViewHandler {
 
     return view;
   };
+
+  public delete = async (userId: string, movieId: number): Promise<View> => {
+    const view = await this.viewService.delete(userId, movieId);
+
+    return view;
+  };
 }
 
 export default ViewHandler;

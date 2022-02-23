@@ -44,7 +44,7 @@ export default (): Resource =>
 
         body: {
           type: 'object',
-          required: ['id', 'name', 'email', 'password', 'role'],
+          required: ['id', 'name', 'email', 'password'],
           properties: {
             id: { type: 'string' },
             name: { type: 'string' },

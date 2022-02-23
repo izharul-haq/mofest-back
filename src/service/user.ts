@@ -1,5 +1,6 @@
 import { User } from '@prisma/client';
 import { singleton } from 'tsyringe';
+import { getHash } from '~/common/util/hash';
 import DatabaseClient from '~/database/prisma';
 import { UserCreateInput, UserUpdateInput } from '~/model/user';
 
@@ -24,6 +25,7 @@ class UserService {
   }
 
   public async create(data: UserCreateInput): Promise<User> {
+    data.password = getHash(data.password);
     const user = await this.db.client.user.create({ data });
 
     return user;
