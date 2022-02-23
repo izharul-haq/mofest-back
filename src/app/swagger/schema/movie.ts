@@ -9,7 +9,7 @@ const MovieSchema = {
     duration: { type: 'number' },
     artists: { type: 'array', items: { type: 'string' } },
     url: { type: 'string' },
-    genre: { type: 'array', items: { type: 'string' } },
+    genres: { type: 'array', items: { type: 'string' } },
   },
 };
 

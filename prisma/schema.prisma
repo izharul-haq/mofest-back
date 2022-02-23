@@ -17,14 +17,8 @@ model Movie {
   duration Int
   artists  String[]
   url      String
-  genre    Genre[]
-  view     View[]
-}
-
-model Genre {
-  name  String  @id
-  view  Int     @default(0)
-  movie Movie[]
+  genres   String[]
+  views    View[]
 }
 
 model User {
@@ -33,7 +27,7 @@ model User {
   email    String @unique
   password String
   role     Role
-  view     View[]
+  views    View[]
 }
 
 model View {
