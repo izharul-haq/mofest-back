@@ -1,6 +1,7 @@
 import { FastifyReply, FastifyRequest } from 'fastify';
 import { Resource } from 'fastify-autoroutes';
 import { container } from 'tsyringe';
+import APIError from '~/common/error/error';
 import MovieHandler from '~/handler/movie';
 
 const handler = container.resolve(MovieHandler);
@@ -38,10 +39,16 @@ export default (): Resource =>
         request: FastifyRequest<{ Querystring: { q: string[] } }>,
         reply: FastifyReply
       ) => {
-        const genres = request.query.q as string[];
-        const movies = await handler.getByGenres(genres);
+        try {
+          const genres = request.query.q as string[];
+          const movies = await handler.getByGenres(genres);
 
-        return reply.send(movies);
+          return reply.send(movies);
+        } catch (error) {
+          const e = error as APIError;
+
+          return reply.status(e.statusCode).send(e.message);
+        }
       },
     },
   };

@@ -37,7 +37,7 @@ export default (): Resource =>
 
         body: {
           type: 'object',
-          required: ['team', 'title', 'desc', 'duration', 'artists', 'url', 'genres'],
+          required: ['title', 'desc', 'duration', 'artists', 'url', 'genres'],
           properties: {
             title: { type: 'string' },
             desc: { type: 'string' },
@@ -55,9 +55,14 @@ export default (): Resource =>
         },
       },
       handler: async (request: FastifyRequest<{ Body: MovieCreateInput }>, reply: FastifyReply) => {
-        const payload = request.body;
-        const movie = await handler.create(payload);
-        return reply.send(movie);
+        try {
+          const payload = request.body;
+          const movie = await handler.create(payload);
+
+          return reply.send(movie);
+        } catch (error) {
+          return reply.status(400).send((error as Error).message);
+        }
       },
     },
   };

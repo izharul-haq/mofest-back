@@ -5,7 +5,7 @@ const UserSchema = {
   properties: {
     id: { type: 'string' },
     name: { type: 'string' },
-    email: { type: 'string' },
+    email: { type: 'string', format: 'email' },
     password: { type: 'string' },
     role: { type: 'string', enum: ['USER', 'ADMIN'] },
   },

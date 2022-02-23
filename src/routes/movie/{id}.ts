@@ -53,6 +53,18 @@ export default (): Resource =>
           },
         },
 
+        body: {
+          type: 'object',
+          properties: {
+            title: { type: 'string' },
+            desc: { type: 'string' },
+            duration: { type: 'number' },
+            artists: { type: 'array', items: { type: 'string' } },
+            genre: { type: 'array', items: { type: 'string' } },
+            url: { type: 'string' },
+          },
+        },
+
         response: {
           '200': {
             $ref: 'http://example.com/schema/movie#',
@@ -71,8 +83,7 @@ export default (): Resource =>
 
           return reply.send(movie);
         } catch (error) {
-          const e = error as APIError;
-          return reply.status(e.statusCode).send(e.message);
+          return reply.status(400).send((error as Error).message);
         }
       },
     },
@@ -102,8 +113,7 @@ export default (): Resource =>
 
           return reply.send(movie);
         } catch (error) {
-          const e = error as APIError;
-          return reply.status(e.statusCode).send(e.message);
+          return reply.status(400).send((error as Error).message);
         }
       },
     },

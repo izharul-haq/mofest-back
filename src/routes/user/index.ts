@@ -1,6 +1,7 @@
 import { FastifyReply, FastifyRequest } from 'fastify';
 import { Resource } from 'fastify-autoroutes';
 import { container } from 'tsyringe';
+import APIError from '~/common/error/error';
 import UserHandler from '~/handler/user';
 import { UserCreateInput } from '~/model/user';
 
@@ -24,9 +25,15 @@ export default (): Resource =>
         },
       },
       handler: async (request: FastifyRequest, reply: FastifyReply) => {
-        const users = await handler.getAll();
+        try {
+          const users = await handler.getAll();
 
-        return reply.send(users);
+          return reply.send(users);
+        } catch (error) {
+          const e = error as APIError;
+
+          return reply.status(e.statusCode).send(e.message);
+        }
       },
     },
     post: {
@@ -41,7 +48,7 @@ export default (): Resource =>
           properties: {
             id: { type: 'string' },
             name: { type: 'string' },
-            email: { type: 'string' },
+            email: { type: 'string', format: 'email' },
             password: { type: 'string' },
             role: { type: 'string', enum: ['USER', 'ADMIN'] },
           },
@@ -54,10 +61,14 @@ export default (): Resource =>
         },
       },
       handler: async (request: FastifyRequest<{ Body: UserCreateInput }>, reply: FastifyReply) => {
-        const payload = request.body;
-        const user = await handler.create(payload);
+        try {
+          const payload = request.body;
+          const user = await handler.create(payload);
 
-        return reply.send(user);
+          return reply.send(user);
+        } catch (error) {
+          return reply.status(400).send((error as Error).message);
+        }
       },
     },
   };

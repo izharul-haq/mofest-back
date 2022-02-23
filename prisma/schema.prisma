@@ -18,7 +18,8 @@ model Movie {
   artists  String[]
   url      String
   genres   String[]
-  views    View[]
+
+  views View[]
 }
 
 model User {
@@ -27,16 +28,20 @@ model User {
   email    String @unique
   password String
   role     Role
-  views    View[]
+
+  views View[]
 }
 
 model View {
-  id      Int     @id @default(autoincrement())
-  user    User    @relation(fields: [userId], references: [id])
-  movie   Movie   @relation(fields: [movieId], references: [id])
-  voted   Boolean @default(false)
   userId  String
   movieId Int
+  voted   Boolean  @default(false)
+  date    DateTime @default(now())
+
+  user  User  @relation(fields: [userId], references: [id])
+  movie Movie @relation(fields: [movieId], references: [id])
+
+  @@id([userId, movieId])
 }
 
 enum Role {

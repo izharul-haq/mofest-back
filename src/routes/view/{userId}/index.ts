@@ -2,42 +2,40 @@ import { FastifyReply, FastifyRequest } from 'fastify';
 import { Resource } from 'fastify-autoroutes';
 import { container } from 'tsyringe';
 import APIError from '~/common/error/error';
-import MovieHandler from '~/handler/movie';
+import ViewHandler from '~/handler/view';
 
-const handler = container.resolve(MovieHandler);
+const handler = container.resolve(ViewHandler);
 
 export default (): Resource =>
   <Resource>{
     get: {
       schema: {
-        description: 'Get a movie from database based on title',
-        summary: 'Get movies by title',
-        tags: ['Movie'],
+        description: 'Get list of views based on user ID',
+        summary: 'Get user views',
+        tags: ['View'],
 
-        querystring: {
+        params: {
           type: 'object',
           properties: {
-            title: {
-              type: 'string',
-            },
+            userId: { type: 'string' },
           },
         },
 
         response: {
           '200': {
-            $ref: 'http://example.com/schema/movie#',
+            $ref: 'http://example.com/schema/view#',
           },
         },
       },
       handler: async (
-        request: FastifyRequest<{ Querystring: { q: string } }>,
+        request: FastifyRequest<{ Params: { userId: string } }>,
         reply: FastifyReply
       ) => {
         try {
-          const title = request.query.q as string;
-          const movie = await handler.getByTitle(title);
+          const userId = request.params.userId;
+          const views = await handler.getUserView(userId);
 
-          return reply.send(movie);
+          return reply.send(views);
         } catch (error) {
           const e = error as APIError;
 

@@ -36,6 +36,7 @@ export default (): Resource =>
           return reply.send(user);
         } catch (error) {
           const e = error as APIError;
+
           return reply.status(e.statusCode).send(e.message);
         }
       },
@@ -50,6 +51,16 @@ export default (): Resource =>
           type: 'object',
           properties: {
             id: { type: 'string' },
+          },
+        },
+
+        body: {
+          type: 'object',
+          properties: {
+            id: { type: 'string' },
+            name: { type: 'string' },
+            email: { type: 'string', format: 'email' },
+            password: { type: 'string' },
           },
         },
 
@@ -71,8 +82,7 @@ export default (): Resource =>
 
           return reply.send(user);
         } catch (error) {
-          const e = error as APIError;
-          return reply.status(e.statusCode).send(e.message);
+          return reply.status(400).send((error as Error).message);
         }
       },
     },
@@ -102,8 +112,7 @@ export default (): Resource =>
 
           return reply.send(user);
         } catch (error) {
-          const e = error as APIError;
-          return reply.status(e.statusCode).send(e.message);
+          return reply.status(400).send((error as Error).message);
         }
       },
     },
