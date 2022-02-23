@@ -1,0 +1,51 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model Movie {
+  id       Int      @id @default(autoincrement())
+  title    String
+  desc     String
+  duration Int
+  artists  String[]
+  url      String
+  genre    Genre[]
+  view     View[]
+}
+
+model Genre {
+  name  String  @id
+  view  Int     @default(0)
+  movie Movie[]
+}
+
+model User {
+  id       String @id @default(uuid())
+  name     String
+  email    String @unique
+  password String
+  role     Role
+  view     View[]
+}
+
+model View {
+  id      Int     @id @default(autoincrement())
+  user    User    @relation(fields: [userId], references: [id])
+  movie   Movie   @relation(fields: [movieId], references: [id])
+  voted   Boolean @default(false)
+  userId  String
+  movieId Int
+}
+
+enum Role {
+  USER
+  ADMIN
+}
