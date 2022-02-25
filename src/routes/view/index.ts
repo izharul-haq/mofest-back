@@ -61,7 +61,7 @@ export default (): Resource =>
           const payload = request.body;
           const view = await handler.view(payload.userId, payload.movieId);
 
-          return reply.send(view);
+          return reply.status(201).send(view);
         } catch (error) {
           return reply.status(400).send((error as Error).message);
         }

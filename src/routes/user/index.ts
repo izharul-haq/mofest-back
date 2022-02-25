@@ -65,7 +65,7 @@ export default (): Resource =>
           const payload = request.body;
           const user = await handler.create(payload);
 
-          return reply.send(user);
+          return reply.status(201).send(user);
         } catch (error) {
           return reply.status(400).send((error as Error).message);
         }

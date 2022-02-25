@@ -31,8 +31,8 @@ export default (): Resource =>
     },
     post: {
       schema: {
-        description: 'Create a new movie',
-        summary: 'Create movie',
+        description: 'Create a new movie entry in the database',
+        summary: 'Create movie entry',
         tags: ['Movie'],
 
         body: {
@@ -59,7 +59,7 @@ export default (): Resource =>
           const payload = request.body;
           const movie = await handler.create(payload);
 
-          return reply.send(movie);
+          return reply.status(201).send(movie);
         } catch (error) {
           return reply.status(400).send((error as Error).message);
         }
