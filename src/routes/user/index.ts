@@ -1,6 +1,7 @@
 import { FastifyReply, FastifyRequest } from 'fastify';
 import { Resource } from 'fastify-autoroutes';
 import { container } from 'tsyringe';
+import authorizeAdmin from '~/app/auth/authorizeAdmin';
 import APIError from '~/common/error/error';
 import UserHandler from '~/handler/user';
 import { UserCreateInput } from '~/model/user';
@@ -24,6 +25,7 @@ export default (): Resource =>
           },
         },
       },
+      preHandler: authorizeAdmin,
       handler: async (request: FastifyRequest, reply: FastifyReply) => {
         try {
           const users = await handler.getAll();

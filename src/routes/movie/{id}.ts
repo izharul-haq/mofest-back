@@ -1,6 +1,7 @@
 import { FastifyReply, FastifyRequest } from 'fastify';
 import { Resource } from 'fastify-autoroutes';
 import { container } from 'tsyringe';
+import authorizeAdmin from '~/app/auth/authorizeAdmin';
 import APIError from '~/common/error/error';
 import MovieHandler from '~/handler/movie';
 import { MovieUpdateInput } from '~/model/movie';
@@ -71,6 +72,7 @@ export default (): Resource =>
           },
         },
       },
+      preHandler: authorizeAdmin,
       handler: async (
         request: FastifyRequest<{ Params: { id: string }; Body: MovieUpdateInput }>,
         reply: FastifyReply
@@ -88,6 +90,7 @@ export default (): Resource =>
       },
     },
     delete: {
+      preHandler: authorizeAdmin,
       schema: {
         description: 'Delete a movie from database based on ID',
         summary: 'Delete movie by ID',

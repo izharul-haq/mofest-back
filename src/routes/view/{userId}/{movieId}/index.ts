@@ -1,6 +1,7 @@
 import { FastifyReply, FastifyRequest } from 'fastify';
 import { Resource } from 'fastify-autoroutes';
 import { container } from 'tsyringe';
+import authorizeAdmin from '~/app/auth/authorizeAdmin';
 import ViewHandler from '~/handler/view';
 
 const handler = container.resolve(ViewHandler);
@@ -8,6 +9,7 @@ const handler = container.resolve(ViewHandler);
 export default (): Resource =>
   <Resource>{
     delete: {
+      preHandler: authorizeAdmin,
       handler: async (
         request: FastifyRequest<{ Params: { userId: string; movieId: number } }>,
         reply: FastifyReply

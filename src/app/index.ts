@@ -1,5 +1,6 @@
 import fastify, { FastifyInstance } from 'fastify';
 import path from 'path';
+import applyAuth from './auth';
 import applyCors from './cors';
 import applyMulter from './multer';
 import applyAutoroutes from './routes';
@@ -16,6 +17,7 @@ const intializeApp = async (): Promise<FastifyInstance> => {
 
   applyCors(server);
   applySwagger(server);
+  applyAuth(server);
   applyAutoroutes(server);
   applyMulter(server);
 

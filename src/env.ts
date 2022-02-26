@@ -8,4 +8,5 @@ dotenv.config({
 export default {
   port: parseInt(process.env.PORT as string),
   database: process.env.DATABASE_URL as string,
+  secret: process.env.SECRET_ACCESS_TOKEN as string,
 };

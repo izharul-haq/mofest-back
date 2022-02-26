@@ -2,6 +2,7 @@ import { FastifyReply, FastifyRequest } from 'fastify';
 import { Resource } from 'fastify-autoroutes';
 import { MultipartFile } from 'fastify-multipart';
 import { container } from 'tsyringe';
+import authorizeAdmin from '~/app/auth/authorizeAdmin';
 import { upload } from '~/app/multer';
 import MovieHandler from '~/handler/movie';
 import { MovieCreateInput } from '~/model/movie';
@@ -38,26 +39,13 @@ export default (): Resource =>
         tags: ['Movie'],
         consumes: ['multipart/form-data'],
 
-        // body: {
-        //   type: 'object',
-        //   required: ['title', 'desc', 'duration', 'artists', 'genres'],
-        //   properties: {
-        //     title: { type: 'string' },
-        //     desc: { type: 'string' },
-        //     duration: { type: 'number' },
-        //     artists: { type: 'array', items: { type: 'string' } },
-        //     genre: { type: 'array', items: { type: 'string' } },
-        //     url: { type: 'string' },
-        //   },
-        // },
-
         response: {
           201: {
             $ref: 'http://example.com/schema/movie#',
           },
         },
       },
-      preHandler: upload.single('file'),
+      preHandler: [authorizeAdmin, upload.single('file')],
       handler: async (
         request: FastifyRequest<{
           Body: {
