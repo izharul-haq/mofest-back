@@ -2,7 +2,7 @@ import jwt from 'jsonwebtoken';
 import env from '~/env';
 import { AuthPayload } from '~/model/auth';
 
-export const signJwt = (plain: string): string => {
+export const signJwt = (plain: AuthPayload): string => {
   const signed = jwt.sign(plain, env.secret);
   return signed;
 };

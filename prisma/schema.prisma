@@ -32,6 +32,14 @@ model User {
   views View[]
 }
 
+model Session {
+  id        Int      @id @default(autoincrement())
+  userId    String
+  createdAt DateTime @default(now())
+  expiredAt DateTime
+  isValid   Boolean  @default(true)
+}
+
 model View {
   userId  String
   movieId Int

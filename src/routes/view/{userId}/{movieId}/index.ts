@@ -9,6 +9,25 @@ const handler = container.resolve(ViewHandler);
 export default (): Resource =>
   <Resource>{
     delete: {
+      schema: {
+        description: 'Delete a view based on user ID and movie ID',
+        summary: 'Delete a view',
+        tags: ['View'],
+
+        params: {
+          type: 'object',
+          properties: {
+            userId: { type: 'string' },
+            movieId: { type: 'number' },
+          },
+        },
+
+        response: {
+          200: {
+            $ref: 'http://example.com/schema/view#',
+          },
+        },
+      },
       preHandler: authorizeAdmin,
       handler: async (
         request: FastifyRequest<{ Params: { userId: string; movieId: number } }>,
